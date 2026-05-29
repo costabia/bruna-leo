@@ -15,13 +15,13 @@
     font-style: normal;
 }
   :root{
-    --paper:#f4f1e8;
+    --paper:#FEFCFC;
     --paper-2:#efe9dc;
-    --green:#6f7253;
-    --green-deep:#585c3e;
-    --green-soft:#8a8d6f;
-    --ink:#5a5a4c;
-    --ink-soft:#8d8b7d;
+    --green:#564333;
+    --green-deep:#6e5139;
+    --green-soft:#855e3e;
+    --ink:#5a514c;
+    --ink-soft:#8d867d;
     --line:#c9c7b3;
     --terra:#c08a5d;
     --maxw:760px;
@@ -169,6 +169,55 @@
   }
   .cd-sep{display:none;}
 
+  /* ---------- Galeria Polaroid ---------- */
+  .polaroid-stack {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .polaroid-scroll-area {
+    position: relative;
+    margin-top: 3rem;
+    padding-bottom: 30vh; /* Mantém a última foto na tela por mais tempo */
+  }
+  .polaroid-item {
+    position: sticky;
+    top: 25vh; /* Ponto da tela onde a foto "estaciona" (gruda) */
+    height: 70vh; /* Quantidade de scroll antes da próxima foto aparecer */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .polaroid {
+    background-color: var(--paper);
+    padding: clamp(12px, 3vw, 16px);
+    padding-bottom: clamp(50px, 12vw, 75px);
+    box-shadow: 0 15px 35px rgba(58,58,46,0.15), 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid var(--line);
+    width: min(85vw, 340px);
+    aspect-ratio: 3/4;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+  }
+  .polaroid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: var(--line);
+    filter: sepia(0.15) contrast(1.05); /* Toque levemente nostálgico */
+  }
+  
+  /* Posições aleatórias para criar o efeito de "jogadas na mesa" */
+  .polaroid-item:nth-child(1) .polaroid { transform: rotate(-4deg) translate(-10px, 0); }
+  .polaroid-item:nth-child(2) .polaroid { transform: rotate(3deg) translate(15px, 5px); }
+  .polaroid-item:nth-child(3) .polaroid { transform: rotate(-5deg) translate(-5px, 12px); }
+  .polaroid-item:nth-child(4) .polaroid { transform: rotate(6deg) translate(20px, -5px); }
+  .polaroid-item:nth-child(5) .polaroid { transform: rotate(-2deg) translate(-15px, 15px); }
+  .polaroid-item:nth-child(6) .polaroid { transform: rotate(4deg) translate(10px, 10px); }
+  .polaroid-item:nth-child(7) .polaroid { transform: rotate(-6deg) translate(-20px, 5px); }
+  .polaroid-item:nth-child(8) .polaroid { transform: rotate(2deg) translate(5px, 0); }
+
   /* ---------- Buttons ---------- */
   .btn{
     --bc:var(--green);
@@ -314,7 +363,7 @@
   }
 
   @media(max-width:560px){
-    .hero-names{font-size:clamp(3rem,16vw,4.5rem); margin-bottom: 30px; margin-top: 40px;}
+    .hero-names{font-size:clamp(3rem,16vw,4.5rem); margin-bottom: 30px;}
     .countdown{gap:.7rem;}
     .cd-unit{min-width:46px;}
     .btn{width:100%;}
@@ -333,7 +382,7 @@
       </div>
     </div>
     <div class="hero-art reveal d1">
-      <img src="assets/image.png" alt="Aquarela de Tiradentes — igrejas coloniais entre as montanhas" />
+      <img src="assets/image.svg" alt="Aquarela de Tiradentes — igrejas coloniais entre as montanhas" />
     </div>
     <div class="wrap">
       <h1 class="script hero-names reveal d1">Bruna <span class="amp">e</span> Leopoldo</h1>
@@ -348,6 +397,41 @@
       </div>
     </div>
   </header>
+
+  <!-- ============ GALERIA POLAROID ============ -->
+  <section class="polaroid-stack" data-screen-label="Nossas Memórias">
+    <div class="wrap">
+      <p class="eyebrow reveal">Nossa História</p>
+      <h2 class="section-title reveal" style="margin-top:.8rem;">Em Retratos</h2>
+    </div>
+    
+    <div class="polaroid-scroll-area">
+      <!-- Foto 1 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto1.jpeg" alt="Memória 1" loading="lazy"></div>
+      </div>
+      <!-- Foto 2 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto2.jpeg" alt="Memória 2" loading="lazy"></div>
+      </div>
+      <!-- Foto 3 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto3.jpeg" alt="Memória 3" loading="lazy"></div>
+      </div>
+      <!-- Foto 4 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto4.jpeg" alt="Memória 4" loading="lazy"></div>
+      </div>
+      <!-- Foto 5 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto5.jpeg" alt="Memória 5" loading="lazy"></div>
+      </div>
+      <!-- Foto 6 -->
+      <div class="polaroid-item">
+        <div class="polaroid"><img src="assets/foto6.jpeg" alt="Memória 6" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ BOAS-VINDAS ============ -->
   <section class="welcome" data-screen-label="Boas-vindas">
@@ -405,7 +489,7 @@
           <p class="event-kicker">24 de outubro de 2026</p>
           <h3 class="event-name">Wedding</h3>
           <p class="event-detail narrow" style="margin-inline:auto;">
-            A cerimônia e a recepção serão na<b> Pousada Brisa da Serra</b>, também em Tiradentes — MG.
+            A cerimônia e a recepção serão na<b> Pousada Brisa da Serra</b>, também em Tiradentes — MG, dando início às <b>15h</b>.
           </p>
           <div class="btn-row">
             <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Pousada+Brisa+da+Serra+Tiradentes+MG" target="_blank" rel="noopener">
