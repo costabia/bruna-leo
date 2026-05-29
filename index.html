@@ -15,13 +15,13 @@
     font-style: normal;
 }
   :root{
-    --paper:#f4f1e8;
+    --paper:#FEFCFC;
     --paper-2:#efe9dc;
-    --green:#6f7253;
-    --green-deep:#585c3e;
-    --green-soft:#8a8d6f;
-    --ink:#5a5a4c;
-    --ink-soft:#8d8b7d;
+    --green:#564333;
+    --green-deep:#6e5139;
+    --green-soft:#855e3e;
+    --ink:#5a514c;
+    --ink-soft:#8d867d;
     --line:#c9c7b3;
     --terra:#c08a5d;
     --maxw:760px;
@@ -168,94 +168,45 @@
   }
   .cd-sep{display:none;}
 
-  /* ---------- Galeria Polaroid (Carrossel Infinito & Livre) ---------- */
-  .polaroid-gallery {
-    padding-top: clamp(2rem, 5vw, 4rem);
-    padding-bottom: 0;
-    text-align: center;
-  }
-  .swipe-hint {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 0.8rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    animation: pulseHint 2s infinite ease-in-out;
-  }
-  @keyframes pulseHint {
-    0%, 100% { opacity: 0.6; transform: translateX(0); }
-    50% { opacity: 1; transform: translateX(4px); }
-  }
-  .carousel-container {
+  /* ---------- Galeria Edge-to-Edge (Loop Infinito) ---------- */
+  .photo-ribbon-section {
+    padding-top: clamp(1rem, 3vw, 2rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+    padding-inline: 0; /* Tira as margens para encostar nas bordas da tela */
+    width: 100vw;
     position: relative;
-    margin-top: 1.5rem;
-    max-width: 100%;
-    overflow: hidden; /* Evita que itens fora da tela afetem o layout do site */
+    transform: translateX(-50%);
+    overflow: hidden;
   }
-  .carousel-track {
+  .ribbon-track {
     display: flex;
-    gap: 1.5rem;
+    gap: 4px; /* Linha branca fina separando as fotos */
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Rolagem fluida no iOS */
-    scrollbar-width: none; /* Esconde barra no Firefox */
-    padding-block: 2rem;
-    /* Removemos o padding das bordas para o loop parecer infinito e contínuo */
+    -webkit-overflow-scrolling: touch; /* Rolagem fluida no celular */
+    scrollbar-width: none;
     padding-inline: 0;
+    align-items: center;
   }
-  .carousel-track::-webkit-scrollbar {
-    display: none; /* Esconde barra no Chrome/Safari */
+  .ribbon-track::-webkit-scrollbar {
+    display: none;
   }
-  .carousel-item {
-    flex: 0 0 280px;
-    /* Sem scroll-snap para permitir "passar reto" livremente */
+  .ribbon-item {
+    flex: 0 0 45vw; /* Em média 2 fotos lado a lado no celular */
+    max-width: 340px;
+    height: auto;
   }
-  .polaroid {
-    background-color: var(--paper);
-    padding: 12px;
-    padding-bottom: 52px;
-    box-shadow: 0 10px 25px rgba(58,58,46,0.12), 0 3px 10px rgba(0,0,0,0.04);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    transition: transform 0.3s ease;
-  }
-  .polaroid img {
+  .ribbon-item img {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 4; /* Mantém o corte retrato padrão */
     object-fit: cover;
-    background-color: var(--paper-2);
-    filter: sepia(0.1) contrast(1.02);
     display: block;
-  }
-  
-  /* Rotações orgânicas aplicadas em todos os clones (loop perfeito) */
-  .carousel-item:nth-child(4n+1) .polaroid { transform: rotate(-2deg); }
-  .carousel-item:nth-child(4n+2) .polaroid { transform: rotate(2.5deg); }
-  .carousel-item:nth-child(4n+3) .polaroid { transform: rotate(-1.5deg); }
-  .carousel-item:nth-child(4n+4) .polaroid { transform: rotate(3deg); }
-
-  /* Indicadores discretos */
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-top: 1rem;
-  }
-  .carousel-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
     background-color: var(--line);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
   }
-  .carousel-dot.active {
-    background-color: var(--green);
-    transform: scale(1.3);
+
+  @media(min-width: 768px) {
+    .ribbon-item {
+      flex: 0 0 25vw; /* Em desktop mostra 4 fotos lado a lado */
+    }
   }
 
   /* ---------- Buttons ---------- */
@@ -438,38 +389,18 @@
     </div>
   </header>
 
-  <!-- ============ GALERIA POLAROID (CARROSSEL INFINITO) ============ -->
-  <section class="polaroid-gallery" data-screen-label="Nossas Memórias">
-    <div class="wrap">
-      <p class="eyebrow reveal">Nossa História</p>
-      <h2 class="section-title reveal" style="margin-top:.8rem;">Em Retratos</h2>
-      <p class="swipe-hint reveal d1">Deslize para ver mais <span>&rarr;</span></p>
-    </div>
-    
-    <div class="carousel-container reveal d1">
-      <div class="carousel-track" id="carouselTrack">
-        <!-- Você só precisa manter essas 8 fotos originais. O JavaScript fará a mágica de multiplicar. -->
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto1.jpeg" alt="Memória 1" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto2.jpeg" alt="Memória 2" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto3.jpeg" alt="Memória 3" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto4.jpeg" alt="Memória 4" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto5.jpeg" alt="Memória 5" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto6.jpeg" alt="Memória 6" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto7.jpeg" alt="Memória 7" loading="lazy"></div></div>
-        <div class="carousel-item"><div class="polaroid"><img src="assets/foto8.jpeg" alt="Memória 8" loading="lazy"></div></div>
-      </div>
-      
-      <!-- Indicadores dinâmicos -->
-      <div class="carousel-dots" id="carouselDots">
-        <button class="carousel-dot active" aria-label="Ir para foto 1"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 2"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 3"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 4"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 5"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 6"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 7"></button>
-        <button class="carousel-dot" aria-label="Ir para foto 8"></button>
-      </div>
+  <!-- ============ GALERIA DE FOTOS (SIDE-BY-SIDE INFINITO) ============ -->
+  <section class="photo-ribbon-section reveal" data-screen-label="Nossas Memórias">
+    <div class="ribbon-track" id="ribbonTrack">
+      <!-- Mantenha suas fotos aqui. O Script cuida de multiplicá-las para o loop. -->
+      <div class="ribbon-item"><img src="assets/foto1.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto2.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto3.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto4.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto5.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto6.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto7.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto8.jpeg" alt="Memória" loading="lazy"></div>
     </div>
   </section>
 
@@ -488,7 +419,7 @@
         Será uma honra e uma imensa felicidade contar com a presença de cada um de vocês na celebração do início de um novo capítulo em nossas vidas.
       </p>
       <p class="eyebrow reveal" style="margin-top:2.2rem;">Com carinho</p>
-      <p class="script sign reveal">Bruna e Leopoldo</p>
+      <p class="script sign reveal">Bruna & Leopoldo</p>
     </div>
   </section>
 
@@ -506,7 +437,7 @@
         <!-- Evento 1 -->
         <article class="event reveal">
           <p class="event-kicker">23 de outubro de 2026</p>
-          <h3 class="event-name">Pré Wedding</h3>
+          <h3 class="event-name">Pré Wedding</h3>
           <p class="event-detail narrow" style="margin-inline:auto;">
             O encontro acontecerá às 19h, no <b>Solar do Leitão</b>, na cidade de Tiradentes — MG. <br> Será uma noite leve e acolhedora para iniciarmos juntos as celebrações.
           </p>
@@ -738,110 +669,70 @@
     setInterval(tick, 1000);
   })();
 
-  /* ---------- Infinite Polaroid Carousel Logic ---------- */
+  /* ---------- Side-by-Side Ribbon (Infinite Loop) ---------- */
   document.addEventListener("DOMContentLoaded", function() {
-    var track = document.getElementById('carouselTrack');
-    var dots = document.querySelectorAll('#carouselDots .carousel-dot');
-    if(!track || !dots.length) return;
+    var track = document.getElementById('ribbonTrack');
+    if(!track) return;
 
-    var originalItems = Array.from(track.querySelectorAll('.carousel-item'));
+    var originalItems = Array.from(track.querySelectorAll('.ribbon-item'));
     var numItems = originalItems.length;
 
-    // Clonar as imagens para criar a mágica do loop infinito
-    // Prepend (colocar antes)
+    // Clonar as imagens para criar o loop infinito invisível
+    // Prepend (colocar no começo)
     originalItems.slice().reverse().forEach(function(item) {
         var clone = item.cloneNode(true);
-        clone.classList.add('clone');
         clone.setAttribute('aria-hidden', 'true');
         track.insertBefore(clone, track.firstChild);
     });
 
-    // Append (colocar depois)
+    // Append (colocar no final)
     originalItems.forEach(function(item) {
         var clone = item.cloneNode(true);
-        clone.classList.add('clone');
         clone.setAttribute('aria-hidden', 'true');
         track.appendChild(clone);
     });
 
-    var allItems = Array.from(track.querySelectorAll('.carousel-item'));
+    var allItems = Array.from(track.querySelectorAll('.ribbon-item'));
     
-    // Calcula a largura de um 'set' inteiro (as 8 fotos + espaçamentos)
+    // Pega a largura exata de 1 set de imagens originais (todas as 8)
     function getSetWidth() {
+        if(allItems.length === 0) return 0;
         return allItems[numItems * 2].offsetLeft - allItems[numItems].offsetLeft;
     }
 
-    // Função para centralizar o carrossel em uma foto específica
-    function centerOnIndex(index, smooth) {
-        var targetItem = allItems[index];
-        if (!targetItem) return;
+    // Iniciar o scroll exatamente na 5ª foto do set original
+    function initPosition() {
+        // A quinta foto do set original (índice 4, já que começa em 0)
+        // Somado ao numItems para pegar a foto no bloco do meio (original)
+        var targetIndex = numItems + 4; 
+        var targetItem = allItems[targetIndex];
+        
+        if(!targetItem) return;
+        
+        // Calcula a rolagem para centralizar o item na tela
         var trackCenter = track.clientWidth / 2;
         var itemCenter = targetItem.offsetLeft + (targetItem.clientWidth / 2);
-        var targetScroll = itemCenter - trackCenter;
-        
-        if (smooth) {
-            track.scrollTo({ left: targetScroll, behavior: 'smooth' });
-        } else {
-            track.scrollLeft = targetScroll;
-        }
-    }
-
-    // Definir índice inicial: exatamente no meio do set original (foto 4/5)
-    var startIndex = numItems + Math.floor(numItems / 2);
-
-    // O reposicionamento deve ocorrer quando as imagens estiverem prontas/carregadas
-    function initPosition() {
-        centerOnIndex(startIndex, false);
+        track.scrollLeft = itemCenter - trackCenter;
     }
     
     initPosition();
-    window.addEventListener('load', initPosition); // Garante precisão após carregamento de imagens/fontes
+    window.addEventListener('load', initPosition); 
     window.addEventListener('resize', initPosition);
 
-    // Manipula a rolagem para aplicar o salto invisível (Loop) e atualizar os pontinhos
+    // Mágica do Loop manual contínuo
     track.addEventListener('scroll', function() {
         var setWidth = getSetWidth();
+        if (setWidth === 0) return;
         var scrollLeft = track.scrollLeft;
 
-        // Se rolou demais para a esquerda (passou pro set clonado de trás)
-        if (scrollLeft < allItems[numItems].offsetLeft - (track.clientWidth / 2)) {
-            track.scrollLeft += setWidth; // Pula invisivelmente para frente
+        // Se rolamos muito pra esquerda (entramos nas clones de trás)
+        if (scrollLeft <= allItems[numItems].offsetLeft - track.clientWidth) {
+            track.scrollLeft += setWidth; 
         }
-        // Se rolou demais para a direita (passou pro set clonado da frente)
-        else if (scrollLeft >= allItems[numItems * 2].offsetLeft - (track.clientWidth / 2)) {
-            track.scrollLeft -= setWidth; // Pula invisivelmente para trás
+        // Se rolamos muito pra direita (entramos nas clones da frente)
+        else if (scrollLeft >= allItems[numItems * 2].offsetLeft - track.clientWidth) {
+            track.scrollLeft -= setWidth;
         }
-
-        // Atualização da bolinha (Dot) ativa
-        var trackCenter = track.scrollLeft + track.clientWidth / 2;
-        var minDistance = Infinity;
-        var closestIndex = 0;
-
-        allItems.forEach(function(item, index) {
-            var itemCenter = item.offsetLeft + item.clientWidth / 2;
-            var distance = Math.abs(itemCenter - trackCenter);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        var originalDotIndex = closestIndex % numItems;
-        dots.forEach(function(dot, index) {
-            if (index === originalDotIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    });
-
-    // Clique nas bolinhas rola até a foto
-    dots.forEach(function(dot, index) {
-        dot.addEventListener('click', function() {
-            var targetIndex = numItems + index; // Vai para a foto no set original
-            centerOnIndex(targetIndex, true);
-        });
     });
   });
 
