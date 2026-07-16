@@ -136,6 +136,7 @@
     font-size:clamp(3rem,10vw,6.4rem);
     line-height:1.16;
     margin-top:clamp(.8rem,2.4vw,1.4rem);
+    margin-bottom:clamp(1.8rem,4vw,2.8rem);
     padding-bottom:.18em;
   }
   .hero-names .amp{font-size:.6em;display:inline-block;vertical-align:middle;margin-inline:.08em;color:var(--green-soft);}
@@ -147,7 +148,7 @@
     padding-left:.42em;
   }
   .hero-place{
-    margin-top:.6rem;font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);
+    margin-top:clamp(1rem,2.4vw,1.5rem);font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);
   }
 
   /* ---------- Countdown ---------- */
@@ -353,7 +354,7 @@
   }
 
   @media(max-width:560px){
-    .hero-names{font-size:clamp(3rem,16vw,4.5rem); margin-bottom: 30px;}
+    .hero-names{font-size:clamp(3rem,16vw,4.5rem);}
     .countdown{gap:.7rem;}
     .cd-unit{min-width:46px;}
     .btn{width:100%;}
@@ -394,13 +395,13 @@
     <div class="ribbon-track" id="ribbonTrack">
       <!-- Mantenha suas fotos aqui. O Script cuida de multiplicá-las para o loop. -->
       <div class="ribbon-item"><img src="assets/foto1.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto8.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto2.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto3.jpeg" alt="Memória" loading="lazy"></div>
-      <div class="ribbon-item"><img src="assets/foto4.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto5.jpeg" alt="Memória" loading="lazy"></div>
-      <div class="ribbon-item"><img src="assets/foto6.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto7.jpeg" alt="Memória" loading="lazy"></div>
-      <div class="ribbon-item"><img src="assets/foto8.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto4.jpeg" alt="Memória" loading="lazy"></div>
+      <div class="ribbon-item"><img src="assets/foto6.jpeg" alt="Memória" loading="lazy"></div>
     </div>
   </section>
 
@@ -610,9 +611,9 @@
 
     <div class="tip-group">
       <h3>Beleza</h3>
+      <p class="intro">Aura Beauty SPA — salão de Varginha que estará atendendo em Tiradentes no dia do casamento.</p>
       <ul class="tip-list">
-        
-        <li><span class="tip-name">Aura Beauty Spa</span><span class="tip-meta"><a href="https://instagram.com/aurabeautyspa.br" target="_blank" rel="noopener">@aurabeautyspa.br</a> · <a href="tel:+5535999090334">(35) 99909-0334</a></span></li>
+        <li><span class="tip-name">Aura Beauty SPA</span><span class="tip-meta"><a href="https://instagram.com/aurabeautyspa.br" target="_blank" rel="noopener">@aurabeautyspa.br</a> · <a href="tel:+5535999090334">(35) 99909-0334</a></span></li>
       </ul>
     </div>
 
@@ -702,12 +703,13 @@
         return allItems[numItems * 2].offsetLeft - allItems[numItems].offsetLeft;
     }
 
-    // Iniciar o scroll exatamente na 5ª foto do set original
+    // Iniciar o carrossel com a foto5 centralizada
     function initPosition() {
-        // A quinta foto do set original (índice 4, já que começa em 0)
-        // Somado ao numItems para pegar a foto no bloco do meio (original)
-        var targetIndex = numItems + 4; 
-        var targetItem = allItems[targetIndex];
+        var originalSet = allItems.slice(numItems, numItems * 2);
+        var targetItem = originalSet.find(function(item) {
+            var image = item.querySelector('img');
+            return image && image.getAttribute('src') === 'assets/foto5.jpeg';
+        });
         
         if(!targetItem) return;
         
