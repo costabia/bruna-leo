@@ -148,7 +148,7 @@
     padding-left:.42em;
   }
   .hero-place{
-    margin-top:clamp(1rem,2.4vw,1.5rem);font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);
+    margin-top:clamp(1.5rem,3.4vw,2.2rem);font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);
   }
 
   /* ---------- Countdown ---------- */
@@ -281,7 +281,8 @@
   }
   footer .fmono{font-size:2.4rem;color:var(--green);}
   footer .fline{margin-top:1rem;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);}
-  footer .fscript{font-family:"BohemeFloral",cursive;color:var(--green);font-size:clamp(2.4rem,7vw,3.2rem);margin-top:.4rem;line-height:1.15;padding-bottom:.12em;}
+  footer .fscript{font-family:"BohemeFloral",cursive;color:var(--green);font-size:clamp(2.4rem,7vw,3.2rem);margin-top:1.8rem;line-height:1.15;padding-bottom:.12em;}
+  footer .footer-monogram{width:clamp(86px,18vw,132px);height:auto;margin-top:1.6rem;opacity:.92;}
 
   /* ---------- Modal / Sheet ---------- */
   .sheet-overlay{
@@ -395,7 +396,6 @@
     <div class="ribbon-track" id="ribbonTrack">
       <!-- Mantenha suas fotos aqui. O Script cuida de multiplicá-las para o loop. -->
       <div class="ribbon-item"><img src="assets/foto1.jpeg" alt="Memória" loading="lazy"></div>
-      <div class="ribbon-item"><img src="assets/foto8.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto2.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto3.jpeg" alt="Memória" loading="lazy"></div>
       <div class="ribbon-item"><img src="assets/foto5.jpeg" alt="Memória" loading="lazy"></div>
@@ -473,6 +473,11 @@
               Mulheres: Vestidos ou conjuntos.
             </p>
           </div>
+          <div class="btn-row">
+            <a class="btn" href="https://confirmacao-presenca-mu.vercel.app/" target="_blank" rel="noopener">
+              Confirmar presença
+            </a>
+          </div>
         </article>
 
         <!-- Evento 2 -->
@@ -502,6 +507,11 @@
               Como a celebração acontecerá em um ambiente externo, sugerimos optar por calçados confortáveis para melhor aproveitarem a ocasião.
             </p>
           </div>
+          <div class="btn-row">
+            <a class="btn" href="https://assessoriavip.com.br/rsvpUnico/ebca1ae0-0e66-11f1-a641-23cd0af285ac" target="_blank" rel="noopener">
+              Confirmar presença
+            </a>
+          </div>
         </article>
 
       </div>
@@ -519,7 +529,7 @@
       <div class="btn-row reveal">
         <button class="btn btn-lg" id="open-tips">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
-          Dicas de Hospedagem, Restaurantes e Beleza
+          Dicas de beleza, Hospedagem e Restaurantes
         </button>
       </div>
     </div>
@@ -530,7 +540,6 @@
     <div class="wrap narrow">
       <p class="eyebrow reveal">Como Chegar</p>
       <h2 class="section-title reveal" style="margin-top:.8rem;">Tiradentes — MG</h2>
-      <div class="divider reveal" style="margin-top:1.6rem;"><span>❦</span></div>
       <div class="info-block reveal" style="margin-top:2.4rem;">
         <p class="eyebrow" style="color:var(--green-soft);">Saindo de Varginha (MG)</p>
         <p class="lede" style="margin-top:.8rem;">
@@ -541,6 +550,12 @@
         <p class="eyebrow" style="color:var(--green-soft);">Saindo de São Paulo (SP)</p>
         <p class="lede" style="margin-top:.8rem;">
           A rota mais comum é seguir pela Rodovia Fernão Dias (BR-381) até a altura de Lavras/Perdões e, em seguida, pegar a BR-265 sentido São João del Rei e Tiradentes. A viagem dura em média 6 a 7 horas de carro.
+        </p>
+      </div>
+      <div class="info-block reveal">
+        <p class="eyebrow" style="color:var(--green-soft);">Chegando de avião</p>
+        <p class="lede" style="margin-top:.8rem;">
+          Há voos da Azul de Campinas para São João del Rei, que fica a aproximadamente 16 km de Tiradentes.
         </p>
       </div>
       
@@ -566,8 +581,9 @@
 
   <!-- ============ FOOTER ============ -->
   <footer data-screen-label="Rodapé">
-    <p class="fline">24 de Outubro de 2026 · Tiradentes — MG</p>
-    <p class="fscript">Esperamos por você neste dia especial</p>
+    <p class="fline">23 e 24 de Outubro de 2026 · Tiradentes — MG</p>
+    <p class="fscript">A sua presença tornará esse dia ainda mais especial</p>
+    <img src="assets/monograma.svg" alt="Monograma Bruna e Leopoldo" class="footer-monogram">
   </footer>
 
 </main>
@@ -610,10 +626,10 @@
     </div>
 
     <div class="tip-group">
-      <h3>Beleza</h3>
+      <h3>Salão</h3>
       <p class="intro">Aura Beauty SPA — salão de Varginha que estará atendendo em Tiradentes no dia do casamento.</p>
       <ul class="tip-list">
-        <li><span class="tip-name">Aura Beauty SPA</span><span class="tip-meta"><a href="https://instagram.com/aurabeautyspa.br" target="_blank" rel="noopener">@aurabeautyspa.br</a> · <a href="tel:+5535999090334">(35) 99909-0334</a></span></li>
+        <li><span class="tip-meta"><a href="https://instagram.com/aurabeautyspa.br" target="_blank" rel="noopener">@aurabeautyspa.br</a> · <a href="tel:+5535999090334">(35) 99909-0334</a></span></li>
       </ul>
     </div>
 
@@ -676,6 +692,11 @@
   document.addEventListener("DOMContentLoaded", function() {
     var track = document.getElementById('ribbonTrack');
     if(!track) return;
+
+    // Evita que as cópias do loop se acumulem caso o carrossel seja reinicializado.
+    track.querySelectorAll('.ribbon-item[aria-hidden="true"]').forEach(function(clone) {
+        clone.remove();
+    });
 
     var originalItems = Array.from(track.querySelectorAll('.ribbon-item'));
     var numItems = originalItems.length;
@@ -756,6 +777,15 @@
     var sheet = document.getElementById('sheet');
     var openBtn = document.getElementById('open-tips');
     var closeBtn = document.getElementById('close-tips');
+    var body = sheet.querySelector('.sheet-body');
+    var order = ['Salão', 'Hospedagem', 'Restaurantes', 'Táxis em Tiradentes'];
+    order.forEach(function(title) {
+      var group = Array.from(body.querySelectorAll('.tip-group')).find(function(item) {
+        var heading = item.querySelector('h3');
+        return heading && heading.textContent.trim() === title;
+      });
+      if(group) body.appendChild(group);
+    });
     function open(){
       overlay.classList.add('open');
       sheet.classList.add('open');
