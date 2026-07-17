@@ -401,8 +401,8 @@
   <!-- ============ HERO ============ -->
   <header class="hero" data-screen-label="Hero">
     <div class="hero-video" aria-hidden="true">
-      <video id="heroMp4" autoplay muted loop playsinline webkit-playsinline preload="auto">
-        <source src="assets/video.mp4" type="video/mp4">
+      <video id="heroMp4" autoplay muted defaultMuted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture>
+        <source src="assets/hero-mobile.mp4" type="video/mp4">
       </video>
     </div>
     <div class="hero-content">
@@ -697,25 +697,53 @@
   (function(){
     var video = document.getElementById('heroMp4');
     if(!video) return;
+    var retryTimer;
 
     function playHeroVideo(){
       video.muted = true;
       video.defaultMuted = true;
+      video.autoplay = true;
       video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
       var play = video.play();
       if(play && typeof play.catch === 'function'){
         play.catch(function(){});
       }
     }
 
+    function startRetrying(){
+      playHeroVideo();
+      clearInterval(retryTimer);
+      retryTimer = setInterval(function(){
+        if(video.paused || video.readyState < 3){
+          playHeroVideo();
+        }else{
+          clearInterval(retryTimer);
+        }
+      }, 450);
+      setTimeout(function(){
+        clearInterval(retryTimer);
+      }, 8000);
+    }
+
+    video.addEventListener('loadedmetadata', startRetrying);
+    video.addEventListener('loadeddata', startRetrying);
+    video.addEventListener('canplay', startRetrying);
+    video.addEventListener('pause', function(){
+      if(document.visibilityState !== 'hidden') playHeroVideo();
+    });
     playHeroVideo();
+    startRetrying();
     document.addEventListener('DOMContentLoaded', playHeroVideo);
-    window.addEventListener('load', playHeroVideo);
+    window.addEventListener('load', startRetrying);
     document.addEventListener('visibilitychange', function(){
-      if(!document.hidden) playHeroVideo();
+      if(!document.hidden) startRetrying();
     });
     ['touchstart','pointerdown','scroll'].forEach(function(eventName){
-      window.addEventListener(eventName, playHeroVideo, {once:true, passive:true});
+      window.addEventListener(eventName, startRetrying, {once:true, passive:true});
     });
   })();
 
