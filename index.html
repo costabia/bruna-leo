@@ -133,7 +133,7 @@
     inset:0;
     z-index:0;
     overflow:hidden;
-    background:var(--green-deep) url("assets/image.png") center/cover no-repeat;
+    background:var(--green-deep);
   }
   .hero-video video{
     position:absolute;
@@ -401,7 +401,7 @@
   <!-- ============ HERO ============ -->
   <header class="hero" data-screen-label="Hero">
     <div class="hero-video" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="auto" poster="assets/image.png">
+      <video id="heroMp4" autoplay muted loop playsinline webkit-playsinline preload="auto">
         <source src="assets/video.mp4" type="video/mp4">
       </video>
     </div>
@@ -693,6 +693,32 @@
 </aside>
 
 <script>
+  /* ---------- Hero MP4 autoplay ---------- */
+  (function(){
+    var video = document.getElementById('heroMp4');
+    if(!video) return;
+
+    function playHeroVideo(){
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      var play = video.play();
+      if(play && typeof play.catch === 'function'){
+        play.catch(function(){});
+      }
+    }
+
+    playHeroVideo();
+    document.addEventListener('DOMContentLoaded', playHeroVideo);
+    window.addEventListener('load', playHeroVideo);
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden) playHeroVideo();
+    });
+    ['touchstart','pointerdown','scroll'].forEach(function(eventName){
+      window.addEventListener(eventName, playHeroVideo, {once:true, passive:true});
+    });
+  })();
+
   /* ---------- Countdown to 24 Oct 2026 ---------- */
   (function(){
     var target = new Date(2026, 9, 24, 15, 0, 0).getTime(); // Oct=9, 15h cerimônia
