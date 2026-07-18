@@ -40,6 +40,9 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  body.is-loading{
+    overflow:hidden;
+  }
 
   /* Subtle paper-fiber texture overlay */
   body::before{
@@ -115,6 +118,63 @@
     width:1.2em;
   }
   .monogram .l{font-size:1em;margin-left:-.34em;}
+
+  /* ---------- Initial loader ---------- */
+  .site-loader{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:grid;
+    place-items:center;
+    background:#eee8dc;
+    transition:opacity .85s ease,visibility .85s ease;
+  }
+  .site-loader.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .loader-monogram{
+    display:block;
+    width:clamp(86px,22vw,142px);
+    aspect-ratio:127 / 108;
+    position:relative;
+    filter:drop-shadow(0 4px 20px rgba(90,84,72,.12));
+    animation:monogramLoad 1.45s ease-in-out infinite alternate;
+  }
+  .loader-monogram img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+  .loader-monogram .loader-white{
+    filter:brightness(0) invert(1);
+    clip-path:inset(0 0 46% 0);
+    animation:monogramWhite 1.45s ease-in-out infinite alternate;
+  }
+  .loader-monogram .loader-gray{
+    filter:brightness(0) saturate(0) invert(64%) sepia(5%) saturate(278%) hue-rotate(3deg) brightness(92%) contrast(86%);
+    clip-path:inset(46% 0 0 0);
+    animation:monogramGray 1.45s ease-in-out infinite alternate;
+  }
+  @keyframes monogramLoad{
+    0%{
+      transform:scale(.985);
+    }
+    100%{
+      transform:scale(1.015);
+    }
+  }
+  @keyframes monogramWhite{
+    0%{clip-path:inset(0 0 46% 0);}
+    100%{clip-path:inset(54% 0 0 0);}
+  }
+  @keyframes monogramGray{
+    0%{clip-path:inset(46% 0 0 0);}
+    100%{clip-path:inset(0 0 54% 0);}
+  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -373,6 +433,27 @@
   .tip-meta{display:block;font-size:.86rem;color:var(--ink-soft);margin-top:.15rem;}
   .tip-meta a{color:var(--green-soft);text-decoration:none;}
   .tip-meta a:hover{color:var(--terra);}
+  .tip-booking{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:.45rem;
+    padding:.32rem .8rem;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--green-deep);
+    font-size:.68rem;
+    line-height:1;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    text-decoration:none;
+    transition:border-color .25s ease,color .25s ease,background .25s ease;
+  }
+  .tip-booking:hover{
+    border-color:var(--terra);
+    color:var(--terra);
+    background:rgba(192,138,93,.08);
+  }
 
   /* ---------- Scroll reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.6,.2,1);}
@@ -383,6 +464,8 @@
 
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none;}
+    .site-loader{transition:none;}
+    .loader-monogram,.loader-monogram img{animation:none;opacity:1;}
     html{scroll-behavior:auto;}
   }
 
@@ -395,7 +478,13 @@
   }
 </style>
 </head>
-<body>
+<body class="is-loading">
+<div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-label="Carregando site">
+  <span class="loader-monogram" aria-hidden="true">
+    <img src="assets/monograma.svg" alt="" class="loader-white">
+    <img src="assets/monograma.svg" alt="" class="loader-gray">
+  </span>
+</div>
 <main>
 
   <!-- ============ HERO ============ -->
@@ -615,12 +704,12 @@
       <h3>Restaurantes</h3>
       <p class="intro">Reserve com antecedência para garantir o seu lugar.</p>
       <ul class="tip-list">
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Goumeco+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Goumeco</a></span><span class="tip-meta"><a href="tel:+553233551955">(32) 3355-1955</a> · WhatsApp</span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Tragaluz+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Tragaluz</a></span><span class="tip-meta"><a href="tel:+5532999684837">(32) 99968-4837</a> · (32) 9910-1251</span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pacco+e+Bacco+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Pacco & Bacco</a></span><span class="tip-meta"><a href="tel:+5532999101251">(32) 99910-1251</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Mia+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Mia Restaurante</a></span><span class="tip-meta"><a href="tel:+5532999917715">(32) 99991-7715</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Ora+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Ora Restaurante</a></span><span class="tip-meta"><a href="tel:+5532984790303">(32) 98479-0303</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Angatu+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Angatu</a></span><span class="tip-meta"><a href="tel:+5532999035734">(32) 99903-5734</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Goumeco+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Goumeco</a></span><span class="tip-meta"><a href="tel:+553233551955">(32) 3355-1955</a> &middot; WhatsApp &middot; <a href="https://www.instagram.com/gourmecoristorante" target="_blank" rel="noopener">@gourmecoristorante</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Tragaluz+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Tragaluz</a></span><span class="tip-meta"><a href="tel:+5532999684837">(32) 99968-4837</a> &middot; (32) 9910-1251 &middot; <a href="https://www.instagram.com/tragaluztiradentes" target="_blank" rel="noopener">@tragaluztiradentes</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pacco+e+Bacco+Tiradentes+MG" target="_blank" rel="noopener">Restaurante Pacco & Bacco</a></span><span class="tip-meta"><a href="tel:+5532999101251">(32) 99910-1251</a> &middot; <a href="https://www.instagram.com/paccoebacco" target="_blank" rel="noopener">@paccoebacco</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Mia+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Mia Restaurante</a></span><span class="tip-meta"><a href="tel:+5532999917715">(32) 99991-7715</a> &middot; <a href="https://www.instagram.com/mia_restaurante" target="_blank" rel="noopener">@mia_restaurante</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Ora+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Ora Restaurante</a></span><span class="tip-meta"><a href="tel:+5532984790303">(32) 98479-0303</a> &middot; <a href="https://www.instagram.com/orarestaurante" target="_blank" rel="noopener">@orarestaurante</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Angatu+Restaurante+Tiradentes+MG" target="_blank" rel="noopener">Angatu</a></span><span class="tip-meta"><a href="tel:+5532999035734">(32) 99903-5734</a> &middot; <a href="https://www.instagram.com/angatutiradentes" target="_blank" rel="noopener">@angatutiradentes</a></span></li>
       </ul>
     </div>
 
@@ -636,24 +725,25 @@
       <h3>Hospedagem</h3>
       <p class="intro">Hotéis e pousadas em Tiradentes. Toque no nome para abrir no mapa.</p>
       <ul class="tip-list">
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pequena+Tiradentes+pousada+Tiradentes+MG" target="_blank" rel="noopener">Pequena Tiradentes</a></span><span class="tip-meta"><a href="tel:+553233551262">(32) 3355-1262</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Sant%C3%ADssimo+Resort+Tiradentes+MG" target="_blank" rel="noopener">Santíssimo Resort</a></span><span class="tip-meta"><a href="tel:+553233552198">(32) 3355-2198</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Solar+da+Ponte+Tiradentes+MG" target="_blank" rel="noopener">Solar da Ponte</a></span><span class="tip-meta"><a href="tel:+553233551255">(32) 3355-1255</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pouso+da+Torre+Tiradentes+MG" target="_blank" rel="noopener">Pouso da Torre</a></span><span class="tip-meta"><a href="tel:+553233551531">(32) 3355-1531</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Solar+da+Serra+Tiradentes+MG" target="_blank" rel="noopener">Pousada Solar da Serra</a></span><span class="tip-meta"><a href="tel:+553233551769">(32) 3355-1769</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Don+Quixote+pousada+Tiradentes+MG" target="_blank" rel="noopener">Don Quixote</a></span><span class="tip-meta"><a href="tel:+553233551933">(32) 3355-1933</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Recanto+das+Araras+Tiradentes+MG" target="_blank" rel="noopener">Pousada Recanto das Araras</a></span><span class="tip-meta"><a href="tel:+553233551848">(32) 3355-1848</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pouso+Alforria+Tiradentes+MG" target="_blank" rel="noopener">Pouso Alforria</a></span><span class="tip-meta"><a href="tel:+553233551536">(32) 3355-1536</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Mar%C3%ADlia+de+Dirceu+Tiradentes+MG" target="_blank" rel="noopener">Pousada Marília de Dirceu</a></span><span class="tip-meta"><a href="tel:+553233551962">(32) 3355-1962</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Antigo+Moinho+Tiradentes+MG" target="_blank" rel="noopener">Pousada Antigo Moinho</a></span><span class="tip-meta"><a href="tel:+553233551227">(32) 3355-1227</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Villa+Real+Tiradentes+MG" target="_blank" rel="noopener">Pousada Villa Real</a></span><span class="tip-meta"><a href="tel:+553233551292">(32) 3355-1292</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Villa+Allegra+Tiradentes+MG" target="_blank" rel="noopener">Pousada Villa Allegra</a></span><span class="tip-meta"><a href="tel:+553233551597">(32) 3355-1597</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Ouro+de+Minas+Tiradentes+MG" target="_blank" rel="noopener">Pousada Ouro de Minas</a></span><span class="tip-meta"><a href="tel:+553233552762">(32) 3355-2762</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Trem+do+Imperador+Tiradentes+MG" target="_blank" rel="noopener">Pousada Trem do Imperador</a></span><span class="tip-meta"><a href="tel:+553233552161">(32) 3355-2161</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Amana+Tiradentes+MG" target="_blank" rel="noopener">Pousada Amana</a></span><span class="tip-meta"><a href="tel:+5532998291717">(32) 99829-1717</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Chafariz+Tiradentes+MG" target="_blank" rel="noopener">Pousada Chafariz</a></span><span class="tip-meta"><a href="tel:+553233551352">(32) 3355-1352</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Vagalumens+Tiradentes+MG" target="_blank" rel="noopener">Pousada Vagalumens</a></span><span class="tip-meta"><a href="tel:+5532984526876">(32) 98452-6876</a></span></li>
-        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+M%C3%A3e+D%27%C3%81gua+Tiradentes+MG" target="_blank" rel="noopener">Pousada Mãe D'Água</a></span><span class="tip-meta"><a href="tel:+553233551206">(32) 3355-1206</a></span></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Brisa+da+Serra+Tiradentes+MG" target="_blank" rel="noopener">Pousada Brisa da Serra</a></span><span class="tip-meta">Local da cerimônia</span><a class="tip-booking" href="https://www.booking.com/hotel/br/pousada-brisa-da-serra-tiradentes.pt-br.html" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pequena+Tiradentes+pousada+Tiradentes+MG" target="_blank" rel="noopener">Pequena Tiradentes</a></span><span class="tip-meta"><a href="tel:+553233551262">(32) 3355-1262</a></span><a class="tip-booking" href="https://www.booking.com/hotel/br/pousada-pequena-tiradentes.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCJ3NlYXJjaF9wZXF1ZW5hIHRpcmFkZW50ZXMgdGlyYWRlbnRlcyBtZ0gtWARoIIgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgC4dPv0gbAAgHSAiRiNDVmYzBlYS1iZWZiLTQ1YTYtYWRjYy03YjAyZDZmNzg5N2bYAgHgAgE&sid=82b688ca24a4374aaff88a1b05641160&all_sr_blocks=30747605_98679461_2_0_0&checkin=2026-09-25&checkout=2026-09-27&dest_id=307476&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=30747605_98679461_2_0_0&hpos=1&matching_block_id=30747605_98679461_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=30747605_98679461_2_0_0__348180&srepoch=1784408604&srpvid=ce06940de4c70148&type=total&ucfs=1&" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Sant%C3%ADssimo+Resort+Tiradentes+MG" target="_blank" rel="noopener">Santíssimo Resort</a></span><span class="tip-meta"><a href="tel:+553233552198">(32) 3355-2198</a></span><a class="tip-booking" href="https://www.booking.com/hotel/br/santissimo-resort.pt-br.html?aid=304142&label=gen173bo-10CAQoggJCJnNlYXJjaF9zYW50aXNzaW1vIHJlc29ydCB0aXJhZGVudGVzIG1nSC1YA2ggiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAICqAIBuAL51O_SBsACAdICJGRjMjQ4ZjhiLWVjMDEtNDJmYS1iMTU1LTRhMmY1ZGQ0YWExM9gCAeACAQ&sid=82b688ca24a4374aaff88a1b05641160&all_sr_blocks=54434403_373514894_2_21_0&checkin=2026-10-23&checkout=2026-10-25&dest_id=544344&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=54434403_373514894_2_21_0&hpos=1&matching_block_id=54434403_373514894_2_21_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=54434403_373514894_2_21_0__728448&srepoch=1784408729&srpvid=501f944a1f4d012c&type=total&ucfs=1&" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Solar+da+Ponte+Tiradentes+MG" target="_blank" rel="noopener">Solar da Ponte</a></span><span class="tip-meta"><a href="tel:+553233551255">(32) 3355-1255</a></span><a class="tip-booking" href="https://www.booking.com/hotel/br/solar-da-ponte.pt-br.html?aid=304142&label=gen173bo-10CAQoggJCJnNlYXJjaF9zYW50aXNzaW1vIHJlc29ydCB0aXJhZGVudGVzIG1nSC1YA2ggiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAICqAIBuAL51O_SBsACAdICJGRjMjQ4ZjhiLWVjMDEtNDJmYS1iMTU1LTRhMmY1ZGQ0YWExM9gCAeACAQ&sid=82b688ca24a4374aaff88a1b05641160&all_sr_blocks=30447805_91029156_0_1_0&checkin=2026-10-23&checkout=2026-10-25&dest_id=304478&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=30447805_91029156_0_1_0&hpos=1&matching_block_id=30447805_91029156_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=30447805_91029156_0_1_0__441200&srepoch=1784408758&srpvid=f081945852b700a3&type=total&ucfs=1&" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pouso+da+Torre+Tiradentes+MG" target="_blank" rel="noopener">Pouso da Torre</a></span><span class="tip-meta"><a href="tel:+553233551531">(32) 3355-1531</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pouso+da+Torre+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Solar+da+Serra+Tiradentes+MG" target="_blank" rel="noopener">Pousada Solar da Serra</a></span><span class="tip-meta"><a href="tel:+553233551769">(32) 3355-1769</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Solar+da+Serra+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Don+Quixote+pousada+Tiradentes+MG" target="_blank" rel="noopener">Don Quixote</a></span><span class="tip-meta"><a href="tel:+553233551933">(32) 3355-1933</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Don+Quixote+pousada+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Recanto+das+Araras+Tiradentes+MG" target="_blank" rel="noopener">Pousada Recanto das Araras</a></span><span class="tip-meta"><a href="tel:+553233551848">(32) 3355-1848</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Recanto+das+Araras+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pouso+Alforria+Tiradentes+MG" target="_blank" rel="noopener">Pouso Alforria</a></span><span class="tip-meta"><a href="tel:+553233551536">(32) 3355-1536</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pouso+Alforria+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Mar%C3%ADlia+de+Dirceu+Tiradentes+MG" target="_blank" rel="noopener">Pousada Marília de Dirceu</a></span><span class="tip-meta"><a href="tel:+553233551962">(32) 3355-1962</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Marilia+de+Dirceu+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Antigo+Moinho+Tiradentes+MG" target="_blank" rel="noopener">Pousada Antigo Moinho</a></span><span class="tip-meta"><a href="tel:+553233551227">(32) 3355-1227</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Antigo+Moinho+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Villa+Real+Tiradentes+MG" target="_blank" rel="noopener">Pousada Villa Real</a></span><span class="tip-meta"><a href="tel:+553233551292">(32) 3355-1292</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Villa+Real+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Villa+Allegra+Tiradentes+MG" target="_blank" rel="noopener">Pousada Villa Allegra</a></span><span class="tip-meta"><a href="tel:+553233551597">(32) 3355-1597</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Villa+Allegra+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Ouro+de+Minas+Tiradentes+MG" target="_blank" rel="noopener">Pousada Ouro de Minas</a></span><span class="tip-meta"><a href="tel:+553233552762">(32) 3355-2762</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Ouro+de+Minas+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Trem+do+Imperador+Tiradentes+MG" target="_blank" rel="noopener">Pousada Trem do Imperador</a></span><span class="tip-meta"><a href="tel:+553233552161">(32) 3355-2161</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Trem+do+Imperador+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Amana+Tiradentes+MG" target="_blank" rel="noopener">Pousada Amana</a></span><span class="tip-meta"><a href="tel:+5532998291717">(32) 99829-1717</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Amana+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Chafariz+Tiradentes+MG" target="_blank" rel="noopener">Pousada Chafariz</a></span><span class="tip-meta"><a href="tel:+553233551352">(32) 3355-1352</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Chafariz+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+Vagalumens+Tiradentes+MG" target="_blank" rel="noopener">Pousada Vagalumens</a></span><span class="tip-meta"><a href="tel:+5532984526876">(32) 98452-6876</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Vagalumens+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
+        <li><span class="tip-name"><a href="https://www.google.com/maps/search/?api=1&query=Pousada+M%C3%A3e+D%27%C3%81gua+Tiradentes+MG" target="_blank" rel="noopener">Pousada Mãe D'Água</a></span><span class="tip-meta"><a href="tel:+553233551206">(32) 3355-1206</a></span><a class="tip-booking" href="https://www.booking.com/searchresults.pt-br.html?ss=Pousada+Mae+D+Agua+Tiradentes+MG" target="_blank" rel="noopener">Booking</a></li>
       </ul>
     </div>
   </div>
@@ -664,7 +754,21 @@
   (function(){
     var video = document.getElementById('heroMp4');
     if(!video) return;
+    var loader = document.getElementById('siteLoader');
     var retryTimer;
+    var loaderHidden = false;
+
+    function hideLoader(){
+      if(loaderHidden) return;
+      loaderHidden = true;
+      document.body.classList.remove('is-loading');
+      if(loader){
+        loader.classList.add('is-hidden');
+        setTimeout(function(){
+          if(loader && loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 900);
+      }
+    }
 
     function playHeroVideo(){
       video.muted = true;
@@ -679,6 +783,9 @@
       if(play && typeof play.catch === 'function'){
         play.catch(function(){});
       }
+      if(!video.paused && video.readyState >= 3){
+        hideLoader();
+      }
     }
 
     function startRetrying(){
@@ -688,6 +795,7 @@
         if(video.paused || video.readyState < 3){
           playHeroVideo();
         }else{
+          hideLoader();
           clearInterval(retryTimer);
         }
       }, 450);
@@ -699,6 +807,8 @@
     video.addEventListener('loadedmetadata', startRetrying);
     video.addEventListener('loadeddata', startRetrying);
     video.addEventListener('canplay', startRetrying);
+    video.addEventListener('playing', hideLoader);
+    video.addEventListener('canplaythrough', hideLoader);
     video.addEventListener('pause', function(){
       if(document.visibilityState !== 'hidden') playHeroVideo();
     });
@@ -712,6 +822,7 @@
     ['touchstart','pointerdown','scroll'].forEach(function(eventName){
       window.addEventListener(eventName, startRetrying, {once:true, passive:true});
     });
+    setTimeout(hideLoader, 6500);
   })();
 
   /* ---------- Countdown to 24 Oct 2026 ---------- */
